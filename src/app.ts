@@ -6,6 +6,7 @@ import Router from "koa-router"
 import logger from 'koa-logger'
 import database from "./utils/database";
 import * as dotenv from 'dotenv'
+import itemsRouter from './routes/items'
 
 (async () => {
     dotenv.config()
@@ -26,6 +27,7 @@ import * as dotenv from 'dotenv'
         app.use(koaBody())
 
         const mainRouter = new Router({prefix: "/api"})
+        mainRouter.use(itemsRouter.routes(), itemsRouter.allowedMethods())
         app.use(mainRouter.routes())
 
         app.use(async (ctx: Context, next: Next) => {
