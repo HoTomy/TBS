@@ -7,6 +7,8 @@ import logger from 'koa-logger'
 import database from "./utils/database";
 import * as dotenv from 'dotenv'
 import itemsRouter from './routes/items'
+import usersRouter from './routes/users'
+import authRouter from './routes/auth'
 
 (async () => {
     dotenv.config()
@@ -28,6 +30,9 @@ import itemsRouter from './routes/items'
 
         const mainRouter = new Router({prefix: "/api"})
         mainRouter.use(itemsRouter.routes(), itemsRouter.allowedMethods())
+        mainRouter.use(usersRouter.routes(), usersRouter.allowedMethods())
+        mainRouter.use(authRouter.routes(), authRouter.allowedMethods())
+
         app.use(mainRouter.routes())
 
         app.use(async (ctx: Context, next: Next) => {
