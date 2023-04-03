@@ -28,4 +28,6 @@ export class Users {
     is_verified!: boolean
     @Column({default: true})
     is_active!: boolean
+    @Column({nullable: true})
+    provider!: string
 }

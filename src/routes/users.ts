@@ -7,7 +7,7 @@ const router = new Router({
 })
 
 router.post('/login', validator.validateUser.login, controller.login)
-router.post('/register', validator.validateUser.register, controller.register)
+router.post('/signup', validator.validateUser.signup, controller.signup)
 
 
 export default router

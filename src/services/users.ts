@@ -1,6 +1,11 @@
 import {Users} from '../entities/users'
 import database from "../utils/database"
 
+type checkUserExist = {
+    username?: string
+    email?: string
+    provider?: string
+}
 const getAll = async () => {
     const dataRepository = database.AppDataSource.getRepository(Users)
     return await dataRepository.find()
@@ -46,12 +51,16 @@ const remove = async (id: number) => {
         return null
 }
 
-const checkUserExist = async (username: string, email: string) => {
+const checkUserExist = async (option:checkUserExist) => {
     const dataRepository = database.AppDataSource.getRepository(Users)
     const queryBuilder = dataRepository.createQueryBuilder('users')
-    queryBuilder.orWhere('users.username = :username', {username: username})
-    queryBuilder.orWhere('users.email = :email', {email: email})
-    return await queryBuilder.getMany()
+    if(option.username)
+        queryBuilder.orWhere('users.username = :username', {username: option.username})
+    if(option.email)
+        queryBuilder.orWhere('users.email = :email', {email: option.email})
+    if(option.provider)
+        queryBuilder.andWhere('users.provider = :provider', {provider: option.provider})
+    return await queryBuilder.getOne()
 }
 
 export default {getAll, getById, getByUsername, filter, create, update, remove, checkUserExist}

@@ -1,6 +1,11 @@
 import {Context, Next} from "koa";
 import authUtil from '../utils/auth'
 import * as dotenv from 'dotenv'
+import google from "../utils/google";
+import usersService from "../services/users";
+import {Users} from "../entities/users";
+import {v4 as uuid} from 'uuid'
+import usersRepository from "../services/users";
 
 dotenv.config()
 
@@ -52,4 +57,60 @@ const refreshJwt = async (ctx: Context, next: Next) => {
     await next()
 }
 
-export default {authJwt, authRefreshJwt, refreshJwt}
+const authGoogle = async (ctx: Context) => {
+    const authURL = google.getAuthUrl()
+    ctx.redirect(authURL)
+}
+
+const authGoogleCallback = async (ctx: Context) => {
+    const code = ctx.request.query.code as string
+    const token = await google.getAuthToken(code)
+    if (!token)
+        ctx.redirect('/api/auth/google')
+
+    const ticket = await google.verifyAuthToken(token.id_token as string)
+    const payload = ticket.getPayload()
+    console.log(payload)
+    if (payload) {
+        const user = await usersService.checkUserExist({email: payload.email, provider: 'google'})
+        if (user) {
+            ctx.session!.googleToken = token
+            ctx.session!.user = user
+
+            ctx.redirect('/api/auth/google/check')
+        }else{
+            const check = !!(await usersService.checkUserExist({email: payload.email}))
+            if(check) {
+                ctx.status = 409
+                ctx.body = {
+                    err: "User exist but not connect google oauth!"
+                }
+                return
+            }
+
+            const newGoogleUser = new Users()
+            newGoogleUser.email = payload.email!
+            newGoogleUser.username = payload.email!.split('@', 1)[0]
+            newGoogleUser.provider = 'google'
+            newGoogleUser.nickname = payload.name!
+            await authUtil.hashPassword(uuid())
+                .then((data) => {
+                    newGoogleUser.password = data.hashedPassword
+                    newGoogleUser.password_salt = data.salt
+                }).catch((err) => {
+                    ctx.status = 400
+                    ctx.body = {err: err}
+                    return
+                })
+
+
+            const result = await usersRepository.create(newGoogleUser)
+            ctx.session!.googleToken = token
+            ctx.session!.user = result
+
+            ctx.redirect('/api/auth/google/check')
+        }
+    }
+}
+
+export default {authJwt, authRefreshJwt, refreshJwt, authGoogle, authGoogleCallback}

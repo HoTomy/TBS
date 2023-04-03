@@ -1,7 +1,7 @@
 import {Context, Next} from "koa";
 import schema from "../schemas/users";
 
-const register = async (ctx: Context, next: Next) => {
+const signup = async (ctx: Context, next: Next) => {
     const schemaReference = schema.register
 
     const {error} = schemaReference.validate({...ctx.request.body}, {abortEarly: false})
@@ -33,4 +33,4 @@ const login = async (ctx: Context, next: Next) => {
     await next()
 }
 
-export default {register, login}
+export default {signup, login}

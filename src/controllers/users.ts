@@ -3,10 +3,13 @@ import {Users} from "../entities/users";
 import usersRepository from '../services/users'
 import authUtil from '../utils/auth'
 
-const register = async (ctx: Context) => {
+const signup = async (ctx: Context) => {
     const request = <Users>ctx.request.body
-    const check = await usersRepository.checkUserExist(request.username, request.email)
-    if (check.length > 0) {
+    const check = !!(await usersRepository.checkUserExist({
+        username: request.username,
+        email: request.email
+    }))
+    if (check) {
         ctx.status = 409
         ctx.body = {
             err: "User already exist!"
@@ -36,6 +39,7 @@ const login = async (ctx: Context) => {
         ctx.body = {err: 'Invalid username or password'}
         return
     }
+
     await authUtil.genJwt(user)
         .then((data) => {
             ctx.body = {
@@ -45,4 +49,4 @@ const login = async (ctx: Context) => {
         })
 }
 
-export default {register, login}
+export default {signup, login}
