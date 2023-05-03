@@ -20,6 +20,11 @@ const getById = async (id: number) => {
     })
 }
 
+const filter = async (data: Pets) => {
+    const dataRepository = database.AppDataSource.getRepository(Pets)
+    return await dataRepository.findBy({...data})
+}
+
 const create = async (data: Pets) => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
     await dataRepository.save(data)
@@ -57,4 +62,4 @@ const remove = async (id: number, currentUser: Users) => {
         return null
 }
 
-export default {getAll, getById, create, update, remove}
+export default {getAll, getById, filter, create, update, remove}

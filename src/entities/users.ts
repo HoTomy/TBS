@@ -2,12 +2,9 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    JoinColumn,
-    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import {Staff} from "./staff";
 
 @Entity()
 export class Users {
