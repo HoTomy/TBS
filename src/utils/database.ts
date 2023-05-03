@@ -5,6 +5,7 @@ import {Items} from "../entities/items";
 import {Users} from "../entities/users";
 import {Pets} from "../entities/pets";
 import {PetPhotos} from "../entities/petPhotos";
+import {Staff} from "../entities/staff";
 dotenv.config()
 
 const AppDataSourceOptions: DataSourceOptions = {
@@ -17,7 +18,7 @@ const AppDataSourceOptions: DataSourceOptions = {
     database: process.env.DB_NAME,
     synchronize: true,
     logging: false,
-    entities: [Items, Users, Pets, PetPhotos]
+    entities: [Items, Users, Pets, PetPhotos, Staff]
 }
 const AppDataSource = new DataSource(AppDataSourceOptions)
 

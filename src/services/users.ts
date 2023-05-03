@@ -1,5 +1,6 @@
 import {Users} from '../entities/users'
 import database from "../utils/database"
+import {Staff} from "../entities/staff";
 
 type checkUserExist = {
     username?: string
@@ -28,7 +29,11 @@ const filter = async (data: Users) => {
 
 const create = async (data: Users) => {
     const dataRepository = database.AppDataSource.getRepository(Users)
-    return await dataRepository.save(data)
+    const result = await dataRepository.save(data)
+    if(result.staff_code){
+        await setStaffCodeUse(result.staff_code)
+    }
+    return result
 }
 
 const update = async (id: number, data: Users) => {
@@ -63,4 +68,18 @@ const checkUserExist = async (option:checkUserExist) => {
     return await queryBuilder.getOne()
 }
 
-export default {getAll, getById, getByUsername, filter, create, update, remove, checkUserExist}
+const checkStaffCodeExist = async (staffCode: string) => {
+    const dataRepository = database.AppDataSource.getRepository(Staff)
+    return await dataRepository.findOneBy({staff_code: staffCode, is_use: false});
+}
+
+const setStaffCodeUse = async (staffCode: string) => {
+    const dataRepository = database.AppDataSource.getRepository(Staff)
+    const result = await checkStaffCodeExist(staffCode)
+    if(result){
+        result.is_use = true
+        await dataRepository.save(result)
+    }
+}
+
+export default {getAll, getById, getByUsername, filter, create, update, remove, checkUserExist, checkStaffCodeExist}

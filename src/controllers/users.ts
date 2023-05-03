@@ -5,6 +5,11 @@ import authUtil from '../utils/auth'
 
 const signup = async (ctx: Context) => {
     const request = <Users>ctx.request.body
+    if(request.staff_code){
+        const checkStaff = !!(await usersRepository.checkStaffCodeExist(request.staff_code))
+        if(!checkStaff)
+            request.staff_code = ""
+    }
     const check = !!(await usersRepository.checkUserExist({
         username: request.username,
         email: request.email

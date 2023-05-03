@@ -6,7 +6,8 @@ const register = Joi.object({
     password: Joi.string().required(),
     avatar: Joi.string(),
     nickname: Joi.string(),
-    gender: Joi.boolean()
+    gender: Joi.boolean(),
+    staff_code: Joi.string()
 })
 
 const login = Joi.object({

@@ -1,4 +1,13 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
+import {Staff} from "./staff";
 
 @Entity()
 export class Users {
@@ -30,4 +39,6 @@ export class Users {
     is_active!: boolean
     @Column({nullable: true})
     provider!: string
+    @Column({nullable: true})
+    staff_code!: string
 }
