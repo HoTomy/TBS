@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 import * as mysql2 from "mysql2/promise";
 import {Items} from "../entities/items";
 import {Users} from "../entities/users";
+import {Pets} from "../entities/pets";
+import {PetPhotos} from "../entities/petPhotos";
 dotenv.config()
 
 const AppDataSourceOptions: DataSourceOptions = {
@@ -15,7 +17,7 @@ const AppDataSourceOptions: DataSourceOptions = {
     database: process.env.DB_NAME,
     synchronize: true,
     logging: false,
-    entities: [Items, Users]
+    entities: [Items, Users, Pets, PetPhotos]
 }
 const AppDataSource = new DataSource(AppDataSourceOptions)
 

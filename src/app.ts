@@ -9,6 +9,7 @@ import * as dotenv from 'dotenv'
 import itemsRouter from './routes/items'
 import usersRouter from './routes/users'
 import authRouter from './routes/auth'
+import petsRouter from './routes/pets'
 
 (async () => {
     dotenv.config()
@@ -26,12 +27,19 @@ import authRouter from './routes/auth'
 
         app.use(logger())
         app.use(json())
-        app.use(koaBody())
+        app.use(koaBody({
+            multipart: true,
+            formidable: {
+                maxFileSize: 200 * 1024 * 1024,
+                uploadDir: __dirname + '/public/uploads'
+            }
+        }))
 
         const mainRouter = new Router({prefix: "/api"})
         mainRouter.use(itemsRouter.routes(), itemsRouter.allowedMethods())
         mainRouter.use(usersRouter.routes(), usersRouter.allowedMethods())
         mainRouter.use(authRouter.routes(), authRouter.allowedMethods())
+        mainRouter.use(petsRouter.routes(), petsRouter.allowedMethods())
 
         app.use(mainRouter.routes())
 
@@ -47,6 +55,6 @@ import authRouter from './routes/auth'
             }
         })
 
-        app.listen(port).on("listening", () => console.log(`Server started ob port ${port}!`))
+        app.listen(port).on("listening", () => console.log(`Server started on port: ${port}!`))
     }).catch((error) => console.log(error))
 })()
