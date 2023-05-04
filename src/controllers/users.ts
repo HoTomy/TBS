@@ -49,7 +49,12 @@ const login = async (ctx: Context) => {
         .then((data) => {
             ctx.body = {
                 token: data.token,
-                refresh: data.refresh
+                refresh: data.refresh,
+                user: {
+                    id: user.id,
+                    nickname: user.nickname,
+                    staff_code: user.staff_code
+                }
             }
         })
 }

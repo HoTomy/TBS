@@ -5,6 +5,7 @@ const signup = async (ctx: Context, next: Next) => {
     const schemaReference = schema.register
 
     const {error} = schemaReference.validate({...ctx.request.body}, {abortEarly: false})
+    console.log(error)
 
     if (error) {
         ctx.status = 400

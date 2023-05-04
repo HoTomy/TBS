@@ -4,10 +4,10 @@ const register = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    avatar: Joi.string(),
-    nickname: Joi.string(),
+    avatar: Joi.string().allow(null, ''),
+    nickname: Joi.string().allow(null, ''),
     gender: Joi.boolean(),
-    staff_code: Joi.string()
+    staff_code: Joi.string().allow(null, '')
 })
 
 const login = Joi.object({

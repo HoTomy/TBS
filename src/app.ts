@@ -4,6 +4,7 @@ import session from "koa-session"
 import json from "koa-json"
 import Router from "koa-router"
 import logger from 'koa-logger'
+import cors from 'koa2-cors'
 import database from "./utils/database";
 import * as dotenv from 'dotenv'
 import itemsRouter from './routes/items'
@@ -27,6 +28,7 @@ import petsRouter from './routes/pets'
 
         app.use(logger())
         app.use(json())
+        app.use(cors())
         app.use(koaBody({
             multipart: true,
             formidable: {

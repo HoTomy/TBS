@@ -25,6 +25,8 @@ export class Pets {
     breed!: string
     @Column({nullable: true})
     gender!: string
+    @Column({nullable:true})
+    description!: string
     @OneToMany(() => PetPhotos, petPhotos => petPhotos.pet, {nullable: true})
     pet_photos!: PetPhotos[]
     @ManyToOne(() => Users)
