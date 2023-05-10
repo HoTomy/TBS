@@ -5,10 +5,11 @@ import {Users} from "../entities/users";
 
 const getAll = async () => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
-    return await dataRepository.find({
+    const result = await dataRepository.find({
         relations: {pet_photos: true, created_by: true},
         select: {created_by: {id: true, nickname: true}}
     })
+    return result
 }
 
 const getById = async (id: number) => {
@@ -43,7 +44,17 @@ const update = async (id: number, data: Pets) => {
         if(data.updated_by.id != findById.created_by.id)
             return null
         const updateData = {...findById, ...data}
-        return await dataRepository.save(updateData)
+        await dataRepository.save(updateData)
+        if(findById.pet_photos.length > 0){
+            const petPhotos = database.AppDataSource.getRepository(PetPhotos);
+            await petPhotos.remove(findById.pet_photos)
+        }
+        for (const item of data.pet_photos) {
+            item.pet = updateData;
+            const petPhotos = database.AppDataSource.getRepository(PetPhotos);
+            await petPhotos.save(item);
+        }
+        return await getById(findById.id)
     } else
         return null
 }

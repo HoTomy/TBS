@@ -7,7 +7,7 @@ export class PetPhotos{
     id!: number
     @Column()
     filename!: string
-    @Column({type: "longblob"})
+    @Column({type: "longtext"})
     base64!: string
     @ManyToOne(() => Pets, pets => pets.pet_photos)
     pet!: Pets
