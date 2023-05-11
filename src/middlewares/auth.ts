@@ -6,6 +6,7 @@ import usersService from "../services/users";
 import {Users} from "../entities/users";
 import {v4 as uuid} from 'uuid'
 import usersRepository from "../services/users";
+import {TokenPayload} from "google-auth-library";
 
 dotenv.config()
 
@@ -58,26 +59,25 @@ const refreshJwt = async (ctx: Context, next: Next) => {
 }
 
 const authGoogle = async (ctx: Context) => {
-    const authURL = google.getAuthUrl()
-    ctx.redirect(authURL)
-}
-
-const authGoogleCallback = async (ctx: Context) => {
     const code = ctx.request.query.code as string
-    const token = await google.getAuthToken(code)
-    if (!token)
-        ctx.redirect('/api/auth/google')
-
-    const ticket = await google.verifyAuthToken(token.id_token as string)
-    const payload = ticket.getPayload()
-    console.log(payload)
+    const payload: TokenPayload | undefined = await google.getUserDetails(code)
     if (payload) {
         const user = await usersService.checkUserExist({email: payload.email, provider: 'google'})
         if (user) {
-            ctx.session!.googleToken = token
-            ctx.session!.user = user
-
-            ctx.redirect('/api/auth/google/check')
+            await authUtil.genJwt(user)
+                .then((data) => {
+                    ctx.status = 200
+                    ctx.body = {
+                        token: data.token,
+                        refresh: data.refresh,
+                        user: {
+                            id: user.id,
+                            nickname: user.nickname,
+                            staff_code: user.staff_code,
+                            provider: user.provider
+                        }
+                    }
+                })
         }else{
             const check = !!(await usersService.checkUserExist({email: payload.email}))
             if(check) {
@@ -93,7 +93,7 @@ const authGoogleCallback = async (ctx: Context) => {
             newGoogleUser.username = payload.email!.split('@', 1)[0]
             newGoogleUser.provider = 'google'
             newGoogleUser.nickname = payload.name!
-            await authUtil.hashPassword(uuid())
+            await authUtil.hashPassword('123456')
                 .then((data) => {
                     newGoogleUser.password = data.hashedPassword
                     newGoogleUser.password_salt = data.salt
@@ -102,15 +102,24 @@ const authGoogleCallback = async (ctx: Context) => {
                     ctx.body = {err: err}
                     return
                 })
-
-
-            const result = await usersRepository.create(newGoogleUser)
-            ctx.session!.googleToken = token
-            ctx.session!.user = result
-
-            ctx.redirect('/api/auth/google/check')
+            await usersRepository.create(newGoogleUser).then(res => {
+                authUtil.genJwt(res)
+                    .then((data) => {
+                        ctx.status = 200
+                        ctx.body = {
+                            token: data.token,
+                            refresh: data.refresh,
+                            user: {
+                                id: res.id,
+                                nickname: res.nickname,
+                                staff_code: res.staff_code,
+                                provider: res.provider
+                            }
+                        }
+                    })
+            })
         }
     }
 }
 
-export default {authJwt, authRefreshJwt, refreshJwt, authGoogle, authGoogleCallback}
+export default {authJwt, authRefreshJwt, refreshJwt, authGoogle}

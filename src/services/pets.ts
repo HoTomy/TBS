@@ -5,11 +5,10 @@ import {Users} from "../entities/users";
 
 const getAll = async () => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
-    const result = await dataRepository.find({
+    return await dataRepository.find({
         relations: {pet_photos: true, created_by: true},
         select: {created_by: {id: true, nickname: true}}
     })
-    return result
 }
 
 const getById = async (id: number) => {

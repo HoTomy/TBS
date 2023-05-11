@@ -53,7 +53,8 @@ const login = async (ctx: Context) => {
                 user: {
                     id: user.id,
                     nickname: user.nickname,
-                    staff_code: user.staff_code
+                    staff_code: user.staff_code,
+                    provider: user.provider
                 }
             }
         })
