@@ -1,6 +1,5 @@
 import {Context, Next} from "koa"
 import Joi from 'joi'
-import validateItem from "../validators/items"
 import validateUser from "../validators/users"
 import validateAuth from "../validators/auth"
 
@@ -19,4 +18,4 @@ const validateId = async (ctx: Context, next: Next) => {
     await next()
 }
 
-export default {validateId, validateItem, validateUser, validateAuth}
+export default {validateId, validateUser, validateAuth}

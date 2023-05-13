@@ -7,10 +7,10 @@ import logger from 'koa-logger'
 import cors from 'koa2-cors'
 import database from "./utils/database";
 import * as dotenv from 'dotenv'
-import itemsRouter from './routes/items'
 import usersRouter from './routes/users'
 import authRouter from './routes/auth'
 import petsRouter from './routes/pets'
+import likesRouter from './routes/likes'
 
 (async () => {
     dotenv.config()
@@ -38,10 +38,10 @@ import petsRouter from './routes/pets'
         }))
 
         const mainRouter = new Router({prefix: "/api"})
-        mainRouter.use(itemsRouter.routes(), itemsRouter.allowedMethods())
         mainRouter.use(usersRouter.routes(), usersRouter.allowedMethods())
         mainRouter.use(authRouter.routes(), authRouter.allowedMethods())
         mainRouter.use(petsRouter.routes(), petsRouter.allowedMethods())
+        mainRouter.use(likesRouter.routes(), likesRouter.allowedMethods())
 
         app.use(mainRouter.routes())
 

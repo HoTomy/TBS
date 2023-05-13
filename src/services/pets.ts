@@ -7,14 +7,15 @@ const getAll = async () => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
     return await dataRepository.find({
         relations: {pet_photos: true, created_by: true},
-        select: {created_by: {id: true, nickname: true}}
+        select: {created_by: {id: true, nickname: true}},
+        where: {is_active: true}
     })
 }
 
 const getById = async (id: number) => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
     return await dataRepository.findOne({
-        where: {id: id},
+        where: {id: id, is_active: true},
         relations: {pet_photos: true, created_by: true},
         select: {created_by: {id: true, nickname: true}}
     })

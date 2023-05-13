@@ -1,11 +1,11 @@
 import {DataSource, DataSourceOptions} from "typeorm";
 import * as dotenv from 'dotenv'
 import * as mysql2 from "mysql2/promise";
-import {Items} from "../entities/items";
 import {Users} from "../entities/users";
 import {Pets} from "../entities/pets";
 import {PetPhotos} from "../entities/petPhotos";
 import {Staff} from "../entities/staff";
+import {Likes} from "../entities/likes";
 dotenv.config()
 
 const AppDataSourceOptions: DataSourceOptions = {
@@ -18,7 +18,7 @@ const AppDataSourceOptions: DataSourceOptions = {
     database: process.env.DB_NAME,
     synchronize: true,
     logging: false,
-    entities: [Items, Users, Pets, PetPhotos, Staff]
+    entities: [Users, Pets, PetPhotos, Staff, Likes]
 }
 const AppDataSource = new DataSource(AppDataSourceOptions)
 
