@@ -1,7 +1,6 @@
 import Router from 'koa-router'
 import auth from '../middlewares/auth'
 import validator from '../middlewares/validator'
-import {Context} from "koa";
 
 const router = new Router({
     prefix: '/auth'
