@@ -5,6 +5,7 @@ import json from "koa-json"
 import Router from "koa-router"
 import logger from 'koa-logger'
 import cors from 'koa2-cors'
+import serve from 'koa-static';
 import database from "./utils/database";
 import * as dotenv from 'dotenv'
 import usersRouter from './routes/users'
@@ -25,6 +26,7 @@ import likesRouter from './routes/likes'
 
         app.keys = ['my-session-secret']
         app.use(session(app))
+        app.use(serve('./src/docs'))
 
         app.use(logger())
         app.use(json())

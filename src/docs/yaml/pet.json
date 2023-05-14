@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "createPet": {
+      "id": "/api/pet",
+      "title": "Pet",
+      "description": "Pet create request",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Pet type",
+          "type": "string"
+        },
+        "pet_name": {
+          "description": "",
+          "type": "string"
+        },
+        "breed": {
+          "description": "",
+          "type": "string"
+        },
+        "gender": {
+          "description": "",
+          "type": "string"
+        },
+        "age": {
+          "description": "",
+          "type": "string"
+        },
+        "description": {
+          "description": "",
+          "type": "string"
+        },
+        "pet_photos": {
+          "description": "",
+          "type": ["array"],
+          "contains": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string"
+              },
+              "base64": {
+                "type": "string"
+              }
+            },
+            "required": ["filename", "base64"]
+          }
+        }
+      },
+      "required": ["type", "pet_name", "breed"]
+    },
+    "updatePet": {
+      "id": "/api/pet/{id}",
+      "title": "Pet",
+      "description": "Pet create request",
+      "type": "object",
+      "properties": {
+        "pet_name": {
+          "description": "",
+          "type": "string"
+        },
+        "breed": {
+          "description": "",
+          "type": "string"
+        },
+        "gender": {
+          "description": "",
+          "type": "string"
+        },
+        "age": {
+          "description": "",
+          "type": "string"
+        },
+        "description": {
+          "description": "",
+          "type": "string"
+        },
+        "pet_photos": {
+          "description": "",
+          "type": ["array"],
+          "contains": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string"
+              },
+              "base64": {
+                "type": "string"
+              }
+            },
+            "required": ["filename", "base64"]
+          }
+        }
+      },
+      "required": ["pet_name", "breed"]
+    }
+  }
+}

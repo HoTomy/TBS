@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "addLike": {
+      "id": "/api/like",
+      "title": "Like",
+      "description": "Like create request",
+      "type": "object",
+      "properties": {
+        "pet_id": {
+          "description": "Pet Id",
+          "type": "number"
+        },
+        "user_id": {
+          "description": "User Id",
+          "type": "number"
+        }
+      },
+      "required": ["pet_id", "user_id"]
+    }
+  }
+}

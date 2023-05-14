@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Back End Demonstration API
+  description: A Pet Adoption API.
+  contact:
+    name: Wally Kong
+    email: heihei0307@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'https://localhost:3000'
+    description: Development server
+tags:
+  - name: Pets
+    description: API endpoints for pet management.
+  - name: Users
+    description: API endpoints for user actions.
+  - name: Likes
+    description: API endpoints for user like pet.
+  - name: Auth
+    description: API endpoints for auth.
+paths:
+  /api/pet:
+    get:
+      tags:
+        - Pets
+      description:
+        Get all pet.
+      responses:
+        '200':
+          description: View of all pet records.
+    post:
+      tags:
+        - Pets
+      description:
+        Create a new pet.
+      requestBody:
+        description: Create a new pet records
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./pet.json#/definitions/createPet
+      responses:
+        '200':
+          description: Create a new pet records
+        '400':
+          description: Bad Request.
+        '401':
+          description: Request user is not a staff.
+  /api/pet/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the pet
+    get:
+      tags:
+        - Pets
+      description:
+        Get pet by id.
+      responses:
+        '200':
+          description: View of an pet record.
+    put:
+      tags:
+        - Pets
+      description:
+        Update pet by id.
+      requestBody:
+        description: Update an pet records by id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./pet.json#/definitions/updatePet
+      responses:
+        '200':
+          description: Update designated pet record.
+    delete:
+      tags:
+        - Pets
+      description:
+        Delete pet by id.
+      responses:
+        '200':
+          description: Delete designated pet record.
+  /api/users/signup:
+    post:
+      tags:
+        - Users
+      description:
+        Signup a new user.
+      requestBody:
+        description: Signup a new account.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/signup
+      responses:
+        '200':
+          description: Signup a new account.
+  /api/users/login:
+    post:
+      tags:
+        - Users
+      description:
+        Signup a new user.
+      requestBody:
+        description: Login to the system.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/login
+      responses:
+        '200':
+          description: Login successfully.
+        '401':
+          description: Login fail.
+  /api/like:
+    get:
+      tags:
+        - Likes
+      description:
+        Get all likes.
+      responses:
+        '200':
+          description: View of all like records.
+    post:
+      tags:
+        - Likes
+      description:
+        Add an likes records.
+      requestBody:
+        description: Update an pet records by id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./like.json#/definitions/addLike
+      responses:
+        '200':
+          description: Add an like records successfully.
+  /api/like/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the like
+    delete:
+      tags:
+        - Likes
+      description:
+        Delete like by id.
+      responses:
+        '200':
+          description: Delete designated like record.
+  /api/auth/google/{code}:
+    parameters:
+      - in: path
+        name: code
+        schema:
+          type: integer
+        required: true
+        description: String code of the google access id
+    get:
+      tags:
+        - Auth
+      description:
+        Signup / Login with the google oauth.
+      responses:
+        '200':
+          description: Login with the google oauth successfully.
+  /api/auth/refresh:
+    post:
+      tags:
+        - Auth
+      description:
+        Refresh the JWT.
+      requestBody:
+        description: Update an pet records by id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./auth.json#/definitions/refresh
+      responses:
+        '200':
+          description: Refresh the JWT successfully.

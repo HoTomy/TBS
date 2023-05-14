@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "signup": {
+      "id": "/api/user/signup",
+      "title": "User",
+      "description": "Signup request",
+      "type": "object",
+      "properties": {
+        "username": {
+          "description": "",
+          "type": "string"
+        },
+        "email": {
+          "description": "",
+          "type": "string"
+        },
+        "password": {
+          "description": "",
+          "type": "string"
+        },
+        "avatar": {
+          "description": "",
+          "type": "string"
+        },
+        "nickname": {
+          "description": "",
+          "type": "string"
+        },
+        "gender": {
+          "description": "true = Male, false = Female",
+          "type": "boolean"
+        },
+        "staff_code": {
+          "description": "",
+          "type": "string"
+        }
+      },
+      "required": ["username", "email", "password"]
+    },
+    "login": {
+      "id": "/api/user/signup",
+      "title": "User",
+      "description": "Signup request",
+      "type": "object",
+      "properties": {
+        "username": {
+          "description": "username",
+          "type": "string"
+        },
+        "password": {
+          "description": "password",
+          "type": "string"
+        }
+      },
+      "required": ["username", "password"]
+    }
+  }
+}

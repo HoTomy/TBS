@@ -8,9 +8,8 @@ const router = new Router({
 })
 
 router.get('/', controller.getAll)
-router.get('/:id', validator.validateId, controller.getById)
-router.post('/filter', controller.filter)
 router.post('/', auth.authJwt, validator.validatePet.create, controller.add)
+router.get('/:id', validator.validateId, controller.getById)
 router.put('/:id', auth.authJwt, validator.validateId, validator.validatePet.update, controller.update)
 router.delete('/:id', auth.authJwt, validator.validateId, controller.remove)
 

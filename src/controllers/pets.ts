@@ -14,13 +14,6 @@ const getById = async (ctx: Context, next: any) => {
     await next()
 }
 
-const filter = async (ctx: Context, next: any) => {
-    ctx.status = 200
-    const requestBody = <Pets>ctx.request.body
-    ctx.body = await petsRepository.filter(requestBody)
-    await next()
-}
-
 const add = async (ctx: Context, next: any) => {
     ctx.status = 200
     const requestBody = <Pets>ctx.request.body
@@ -59,4 +52,4 @@ const remove = async (ctx: Context, next: any) => {
     await next()
 }
 
-export default {getAll, getById, filter, add, update, remove}
+export default {getAll, getById, add, update, remove}
