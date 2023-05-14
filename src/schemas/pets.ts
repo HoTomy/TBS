@@ -5,8 +5,8 @@ const add = Joi.object({
     pet_name: Joi.string().required(),
     age: Joi.number(),
     breed: Joi.string().required(),
-    gender: Joi.string(),
-    description: Joi.string(),
+    gender: Joi.string().allow(''),
+    description: Joi.string().allow(''),
     pet_photos: Joi.array()
 })
 
@@ -14,8 +14,8 @@ const update = Joi.object({
     pet_name: Joi.string().required(),
     age: Joi.number(),
     breed: Joi.string().required(),
-    gender: Joi.string(),
-    description: Joi.string(),
+    gender: Joi.string().allow(''),
+    description: Joi.string().allow(''),
     pet_photos: Joi.array()
 })
 

@@ -4,6 +4,7 @@ import usersRepository from '../services/users'
 import authUtil from '../utils/auth'
 
 const signup = async (ctx: Context) => {
+    ctx.status = 200
     const request = <Users>ctx.request.body
     if(request.staff_code){
         const checkStaff = !!(await usersRepository.checkStaffCodeExist(request.staff_code))
@@ -31,12 +32,10 @@ const signup = async (ctx: Context) => {
             ctx.body = {err: err}
             return
         })
-
-    const result = await usersRepository.create(request)
-    ctx.status = 200
-    ctx.body = result
+    ctx.body = await usersRepository.create(request)
 }
 const login = async (ctx: Context) => {
+    ctx.status = 200
     const {username, password} = <Users>ctx.request.body
     const user = await usersRepository.getByUsername(username)
     if (user == null || !await authUtil.checkPassword(password, user.password)) {

@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv'
 import google from "../utils/google";
 import usersService from "../services/users";
 import {Users} from "../entities/users";
-import {v4 as uuid} from 'uuid'
 import usersRepository from "../services/users";
 import {TokenPayload} from "google-auth-library";
 
