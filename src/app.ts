@@ -12,6 +12,7 @@ import usersRouter from './routes/users'
 import authRouter from './routes/auth'
 import petsRouter from './routes/pets'
 import likesRouter from './routes/likes'
+import {runSeeders} from "typeorm-extension";
 
 (async () => {
     dotenv.config()
@@ -19,7 +20,7 @@ import likesRouter from './routes/likes'
         console.log('Initial database successfully!')
     })
 
-    await database.AppDataSource.initialize().then(() => {
+    await database.AppDataSource.initialize().then(async () => {
         console.log("Connect database successfully!")
         const app = new Koa()
         const port = process.env.PORT || 3000
@@ -61,4 +62,8 @@ import likesRouter from './routes/likes'
 
         app.listen(port).on("listening", () => console.log(`Server started on port: ${port}!`))
     }).catch((error) => console.log(error))
+
+    await runSeeders(database.AppDataSource, {
+        seeds: ['src/utils/db/seeders/**/*{.ts,.js}']
+    })
 })()

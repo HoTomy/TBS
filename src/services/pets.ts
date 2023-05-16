@@ -24,10 +24,12 @@ const getById = async (id: number) => {
 const create = async (data: Pets) => {
     const dataRepository = database.AppDataSource.getRepository(Pets)
     await dataRepository.save(data)
-    for (const item of data.pet_photos) {
-        item.pet = data;
-        const petPhotos = database.AppDataSource.getRepository(PetPhotos);
-        await petPhotos.save(item);
+    if(data.pet_photos && data.pet_photos.length > 0){
+        for (const item of data.pet_photos) {
+            item.pet = data;
+            const petPhotos = database.AppDataSource.getRepository(PetPhotos);
+            await petPhotos.save(item);
+        }
     }
     return await getById(data.id)
 }
@@ -44,10 +46,12 @@ const update = async (id: number, data: Pets) => {
             const petPhotos = database.AppDataSource.getRepository(PetPhotos);
             await petPhotos.remove(findById.pet_photos)
         }
-        for (const item of data.pet_photos) {
-            item.pet = updateData;
-            const petPhotos = database.AppDataSource.getRepository(PetPhotos);
-            await petPhotos.save(item);
+        if(data.pet_photos && data.pet_photos.length > 0){
+            for (const item of data.pet_photos) {
+                item.pet = updateData;
+                const petPhotos = database.AppDataSource.getRepository(PetPhotos);
+                await petPhotos.save(item);
+            }
         }
         return await getById(findById.id)
     } else

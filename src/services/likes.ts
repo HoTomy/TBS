@@ -14,7 +14,6 @@ const getById = async (id: number) => {
 
 const create = async (data: Likes) => {
     const dataRepository = database.AppDataSource.getRepository(Likes)
-    console.log(data)
     return await dataRepository.save(data)
 }
 
