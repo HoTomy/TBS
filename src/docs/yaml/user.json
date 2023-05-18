@@ -3,7 +3,7 @@
   "definitions": {
     "signup": {
       "id": "/api/user/signup",
-      "title": "User",
+      "title": "Signup",
       "description": "Signup request",
       "type": "object",
       "properties": {
@@ -40,7 +40,7 @@
     },
     "login": {
       "id": "/api/user/signup",
-      "title": "User",
+      "title": "Login",
       "description": "Signup request",
       "type": "object",
       "properties": {

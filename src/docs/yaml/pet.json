@@ -3,7 +3,7 @@
   "definitions": {
     "createPet": {
       "id": "/api/pet",
-      "title": "Pet",
+      "title": "Create Pet",
       "description": "Pet create request",
       "type": "object",
       "properties": {
@@ -52,7 +52,7 @@
     },
     "updatePet": {
       "id": "/api/pet/{id}",
-      "title": "Pet",
+      "title": "Update Pet",
       "description": "Pet create request",
       "type": "object",
       "properties": {
