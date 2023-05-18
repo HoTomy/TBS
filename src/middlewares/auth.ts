@@ -49,7 +49,6 @@ const authRefreshJwt = async (ctx: Context, next: Next) => {
 
 const refreshJwt = async (ctx: Context, next: Next) => {
     const user = ctx.state.user
-    console.log(user)
     if (user != null)
         await authUtil.genJwt(user)
             .then((data) => {
@@ -64,7 +63,6 @@ const refreshJwt = async (ctx: Context, next: Next) => {
                         provider: user.data.provider
                     }
                 }
-                console.log(ctx.body)
             })
     await next()
 }

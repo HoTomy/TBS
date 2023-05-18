@@ -10,9 +10,7 @@ const getAll = async (ctx: Context, next: any) => {
 
 const add = async (ctx: Context, next: any) => {
     const requestBody = <Likes>ctx.request.body
-    console.log(requestBody)
     ctx.body = await likesRepository.create(requestBody).then(res => console.log(res)).catch(err => console.log(err))
-    console.log(ctx.body)
     ctx.status = 200
     await next()
 }
