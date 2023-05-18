@@ -31,7 +31,7 @@ import {runSeeders} from "typeorm-extension";
 
         app.use(logger())
         app.use(json())
-        app.use(cors())
+        app.use(cors({origin: 'http://localhost:3001'}))
         app.use(koaBody({
             multipart: true,
             formidable: {
