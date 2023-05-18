@@ -19,14 +19,16 @@ const authJwt = async (ctx: Context, next: Next) => {
         } catch (err) {
             ctx.status = 401
             ctx.body = {
-                err: 'Invalid token'
+                err: 'Token Expired'
             }
+            return
         }
     } else {
         ctx.status = 401
         ctx.body = {
             err: 'Invalid token'
         }
+        return
     }
 }
 
@@ -41,18 +43,28 @@ const authRefreshJwt = async (ctx: Context, next: Next) => {
         ctx.body = {
             err: 'Invalid refresh token'
         }
+        return
     }
 }
 
 const refreshJwt = async (ctx: Context, next: Next) => {
-    if (ctx.state.user != null)
-        await authUtil.genJwt(ctx.state.user)
+    const user = ctx.state.user
+    console.log(user)
+    if (user != null)
+        await authUtil.genJwt(user)
             .then((data) => {
                 ctx.status = 200
                 ctx.body = {
                     token: data.token,
-                    refresh: data.refresh
+                    refresh: data.refresh,
+                    user: {
+                        id: user.data.id,
+                        nickname: user.data.nickname,
+                        staff_code: user.data.staff_code,
+                        provider: user.data.provider
+                    }
                 }
+                console.log(ctx.body)
             })
     await next()
 }
