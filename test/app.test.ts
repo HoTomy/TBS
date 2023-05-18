@@ -2,7 +2,7 @@ import Koa from "koa"
 import json from "koa-json";
 import * as dotenv from "dotenv";
 import request from "supertest";
-import testConnection from "../src/testHelper";
+import testConnection from "../src/utils/testHelper";
 import Router from "koa-router";
 import petsRouter from "../src/routes/pets";
 import usersRouter from "../src/routes/users";

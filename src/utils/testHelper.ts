@@ -1,4 +1,4 @@
-import database from "./utils/database";
+import database from "./database";
 
 const create = async () => {
     await database.AutoCreateDatabase()
