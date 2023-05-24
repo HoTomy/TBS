@@ -33,7 +33,9 @@
         },
         "pet_photos": {
           "description": "",
-          "type": ["array"],
+          "type": [
+            "array"
+          ],
           "contains": {
             "type": "object",
             "properties": {
@@ -44,11 +46,18 @@
                 "type": "string"
               }
             },
-            "required": ["filename", "base64"]
+            "required": [
+              "filename",
+              "base64"
+            ]
           }
         }
       },
-      "required": ["type", "pet_name", "breed"]
+      "required": [
+        "type",
+        "pet_name",
+        "breed"
+      ]
     },
     "updatePet": {
       "id": "/api/pet/{id}",
@@ -78,7 +87,9 @@
         },
         "pet_photos": {
           "description": "",
-          "type": ["array"],
+          "type": [
+            "array"
+          ],
           "contains": {
             "type": "object",
             "properties": {
@@ -89,11 +100,17 @@
                 "type": "string"
               }
             },
-            "required": ["filename", "base64"]
+            "required": [
+              "filename",
+              "base64"
+            ]
           }
         }
       },
-      "required": ["pet_name", "breed"]
+      "required": [
+        "pet_name",
+        "breed"
+      ]
     }
   }
 }

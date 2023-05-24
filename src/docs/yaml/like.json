@@ -16,7 +16,10 @@
           "type": "number"
         }
       },
-      "required": ["pet_id", "user_id"]
+      "required": [
+        "pet_id",
+        "user_id"
+      ]
     }
   }
 }

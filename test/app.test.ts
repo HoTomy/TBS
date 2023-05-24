@@ -9,7 +9,7 @@ import usersRouter from "../src/routes/users";
 import {koaBody} from "koa-body";
 
 dotenv.config()
-const app:Koa = new Koa()
+const app: Koa = new Koa()
 const port = process.env.PORT || 3000
 app.use(json())
 app.use(koaBody())
@@ -71,13 +71,13 @@ describe('Pets / - a pets management api endpoint', () => {
                 age: 12,
                 description: "This is my pet description!",
             })
-            expect(result.statusCode).toEqual(200)
+        expect(result.statusCode).toEqual(200)
     })
-    test('Get all pet', async ()=>{
+    test('Get all pet', async () => {
         const result = await request(app.callback()).get('/api/pet')
         expect(result.statusCode).toEqual(200)
     })
-    test('Get a pet', async ()=>{
+    test('Get a pet', async () => {
         const result = await request(app.callback()).get('/api/pet/1')
         expect(result.statusCode).toEqual(200)
     })
@@ -116,6 +116,6 @@ describe('Pets / - a pets management api endpoint', () => {
     })
 })
 
-afterAll(async () =>{
+afterAll(async () => {
     await testConnection.close()
 })

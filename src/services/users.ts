@@ -30,7 +30,7 @@ const filter = async (data: Users) => {
 const create = async (data: Users) => {
     const dataRepository = database.AppDataSource.getRepository(Users)
     const result = await dataRepository.save(data)
-    if(result.staff_code){
+    if (result.staff_code) {
         await setStaffCodeUse(result.staff_code)
     }
     return result
@@ -56,14 +56,14 @@ const remove = async (id: number) => {
         return null
 }
 
-const checkUserExist = async (option:checkUserExist) => {
+const checkUserExist = async (option: checkUserExist) => {
     const dataRepository = database.AppDataSource.getRepository(Users)
     const queryBuilder = dataRepository.createQueryBuilder('users')
-    if(option.username)
+    if (option.username)
         queryBuilder.orWhere('users.username = :username', {username: option.username})
-    if(option.email)
+    if (option.email)
         queryBuilder.orWhere('users.email = :email', {email: option.email})
-    if(option.provider)
+    if (option.provider)
         queryBuilder.andWhere('users.provider = :provider', {provider: option.provider})
     return await queryBuilder.getOne()
 }
@@ -76,7 +76,7 @@ const checkStaffCodeExist = async (staffCode: string) => {
 const setStaffCodeUse = async (staffCode: string) => {
     const dataRepository = database.AppDataSource.getRepository(Staff)
     const result = await checkStaffCodeExist(staffCode)
-    if(result){
+    if (result) {
         result.is_use = true
         await dataRepository.save(result)
     }

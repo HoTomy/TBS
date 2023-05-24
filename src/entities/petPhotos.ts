@@ -2,7 +2,7 @@ import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Upd
 import {Pets} from "./pets";
 
 @Entity()
-export class PetPhotos{
+export class PetPhotos {
     @PrimaryGeneratedColumn()
     id!: number
     @Column()

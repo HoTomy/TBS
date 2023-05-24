@@ -51,7 +51,7 @@ import {runSeeders} from "typeorm-extension";
         app.use(async (ctx: Context, next: Next) => {
             try {
                 await next()
-                if (ctx.status === 404){
+                if (ctx.status === 404) {
                     ctx.status = 404
                     ctx.body = {err: "No such endpoint existed"}
                 }

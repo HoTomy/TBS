@@ -36,7 +36,11 @@
           "type": "string"
         }
       },
-      "required": ["username", "email", "password"]
+      "required": [
+        "username",
+        "email",
+        "password"
+      ]
     },
     "login": {
       "id": "/api/user/signup",
@@ -53,7 +57,10 @@
           "type": "string"
         }
       },
-      "required": ["username", "password"]
+      "required": [
+        "username",
+        "password"
+      ]
     }
   }
 }

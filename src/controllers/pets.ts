@@ -18,7 +18,7 @@ const add = async (ctx: Context, next: any) => {
     ctx.status = 200
     const requestBody = <Pets>ctx.request.body
     const currentUser = <Users>ctx.state.user.data
-    if(!currentUser.staff_code){
+    if (!currentUser.staff_code) {
         ctx.body = {message: 'User is not a staff!'}
         return
     }
@@ -31,7 +31,7 @@ const update = async (ctx: Context, next: any) => {
     ctx.status = 200
     const requestBody = <Pets>ctx.request.body
     const currentUser = <Users>ctx.state.user.data
-    if(!currentUser.staff_code){
+    if (!currentUser.staff_code) {
         ctx.body = {message: 'User is not a staff!'}
         return
     }
@@ -44,7 +44,7 @@ const update = async (ctx: Context, next: any) => {
 const remove = async (ctx: Context, next: any) => {
     ctx.status = 200
     const currentUser = <Users>ctx.state.user.data
-    if(!currentUser.staff_code){
+    if (!currentUser.staff_code) {
         ctx.body = {message: 'User is not a staff!'}
         return
     }

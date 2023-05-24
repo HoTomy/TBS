@@ -2,12 +2,12 @@ import {Seeder} from "typeorm-extension";
 import {DataSource} from "typeorm";
 import {Staff} from "../../../entities/staff";
 
-export default class StaffSeeder implements Seeder{
+export default class StaffSeeder implements Seeder {
     public async run(
         dataSource: DataSource
-    ): Promise<any>{
+    ): Promise<any> {
         const repos = dataSource.getRepository(Staff)
-        if(await repos.count() === 0){
+        if (await repos.count() === 0) {
             await repos.insert([
                 {staff_code: 'A0001'},
                 {staff_code: 'A0002'},

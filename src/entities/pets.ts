@@ -2,11 +2,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
+    ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
-    UpdateDateColumn,
-    JoinColumn,
-    ManyToOne
+    UpdateDateColumn
 } from "typeorm";
 import {PetPhotos} from "./petPhotos";
 import {Users} from "./users";
@@ -25,7 +25,7 @@ export class Pets {
     breed!: string
     @Column({nullable: true})
     gender!: string
-    @Column({nullable:true})
+    @Column({nullable: true})
     description!: string
     @OneToMany(() => PetPhotos, petPhotos => petPhotos.pet, {nullable: true})
     pet_photos!: PetPhotos[]

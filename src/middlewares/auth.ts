@@ -3,8 +3,8 @@ import authUtil from '../utils/auth'
 import * as dotenv from 'dotenv'
 import google from "../utils/google";
 import usersService from "../services/users";
-import {Users} from "../entities/users";
 import usersRepository from "../services/users";
+import {Users} from "../entities/users";
 import {TokenPayload} from "google-auth-library";
 
 dotenv.config()
@@ -87,9 +87,9 @@ const authGoogle = async (ctx: Context) => {
                         }
                     }
                 })
-        }else{
+        } else {
             const check = !!(await usersService.checkUserExist({email: payload.email}))
-            if(check) {
+            if (check) {
                 ctx.status = 409
                 ctx.body = {
                     err: "User exist but not connect google oauth!"
